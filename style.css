@@ -1,26 +1,24 @@
 :root {
-    /* Light Theme (Default) */
+   
     --background: #ffffff;
     --text-color: #1a1a1a;
-    --primary-accent: #007bff; /* Blue */
+    --primary-accent: #007bff;
     --secondary-accent: #6c757d;
     --card-bg: #f5f5f5;
     --shadow-light: rgba(0, 0, 0, 0.08);
     --border-color: #e0e0e0;
 }
 
-/* Dark Theme Overrides */
 body.dark-mode {
     --background: #121212;
     --text-color: #f0f0f0;
-    --primary-accent: #66b2ff; /* Lighter Blue for contrast */
+    --primary-accent: #66b2ff; 
     --secondary-accent: #a0a0a0;
     --card-bg: #1e1e1e;
     --shadow-light: rgba(255, 255, 255, 0.08);
     --border-color: #333333;
 }
 
-/* --- 2. Base & Typography --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -32,7 +30,7 @@ body {
     line-height: 1.6;
     background-color: var(--background);
     color: var(--text-color);
-    transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transition */
+    transition: background-color 0.5s ease, color 0.5s ease; 
     scroll-behavior: smooth;
 }
 
@@ -44,7 +42,7 @@ body {
 
 h1, h2, h3 {
     margin-bottom: 0.5em;
-    font-weight: 800; /* Extra bold for impact */
+    font-weight: 800;
 }
 
 a {
@@ -57,7 +55,6 @@ a:hover {
     color: var(--secondary-accent);
 }
 
-/* --- 3. Header/Nav Styling --- */
 .main-header {
     position: sticky;
     top: 0;
@@ -92,7 +89,6 @@ a:hover {
     padding: 5px;
 }
 
-/* --- 4. Hero Section --- */
 .hero-section {
     min-height: 90vh;
     display: flex;
@@ -126,7 +122,7 @@ a:hover {
     display: inline-block;
     padding: 12px 25px;
     background-color: var(--primary-accent);
-    color: var(--background); /* Use background color for contrast text */
+    color: var(--background); 
     border-radius: 5px;
     margin-top: 20px;
     font-weight: 600;
@@ -139,43 +135,28 @@ a:hover {
     transform: translateY(-2px);
 }
 
-/* --- Hero Section Specifics --- */
-
-/* Existing .image-placeholder rule (for reference) */
-.image-placeholder {
-    width: 300px;
-    height: 300px;
-    background-color: var(--card-bg);
-    border-radius: 50%; /* This makes the boundary circular */
     border: 5px solid var(--primary-accent);
     box-shadow: 0 0 20px var(--shadow-light);
     animation: float 4s ease-in-out infinite;
-    /* Crucial addition for image masking: */
+    
     overflow: hidden; 
 }
-
-/* --- NEW: Rule for the image inside the placeholder --- */
 .image-placeholder img {
-    /* 1. Make the image take up 100% of the placeholder's dimensions */
+  
     width: 100%;
     height: 100%;
     
-    /* 2. Ensure the image covers the entire area without stretching */
-    /* This crops the image (like 'background-size: cover') */
     object-fit: cover; 
-    
-    /* 3. Center the image content */
+  
     object-position: center; 
-    
-    /* Optional: Ensure the image itself is also visually circular/smooth */
+
     border-radius: 50%;
-    
-    /* Optional: Add a smooth transition for any future hover effects */
+
     transition: transform 0.3s ease-in-out;
 }
 
 .image-placeholder img:hover {
-    transform: scale(1.05); /* Subtle zoom on hover */
+    transform: scale(1.05); 
 }
 
 @keyframes float {
@@ -183,7 +164,6 @@ a:hover {
     50% { transform: translateY(-10px); }
 }
 
-/* --- 5. Skills & Projects --- */
 .section-title {
     font-size: 2.5rem;
     text-align: center;
@@ -250,49 +230,40 @@ a:hover {
     margin-right: 15px;
 }
 
-/* --- 6. Scroll Reveal Animations (Initial State) --- */
 
-/* Base class for all elements that need to be revealed */
 .reveal {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* Fade In (Simple Opacity/Scale) */
+
 .reveal.fade-in {
     transform: scale(0.95);
     transition-duration: 0.8s;
 }
 
-/* Slide from Left */
+
 .reveal.fade-left {
     transform: translateX(-50px);
 }
 
-/* Slide from Right */
 .reveal.fade-right {
     transform: translateX(50px);
 }
 
-/* Slide from Bottom (Default is 'fade-up') */
 .reveal.fade-up {
     transform: translateY(50px);
 }
 
-/* Final State (Applied by JavaScript) */
 .reveal.active {
     opacity: 1;
-    transform: none; /* Reset transform */
+    transform: none;
 }
 
-/* Staggered Delays (CSS only) */
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 
-/* --- 7. Interactive Animations --- */
-
-/* Pulse for CTA button */
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
@@ -303,7 +274,6 @@ a:hover {
     animation: pulse 2s infinite;
 }
 
-/* --- 8. Footer --- */
 footer {
     padding: 30px 5%;
     text-align: center;
@@ -315,7 +285,6 @@ footer {
     margin-top: 10px;
 }
 
-/* --- 9. Responsive Adjustments --- */
 @media (max-width: 900px) {
     .hero-section {
         flex-direction: column;
