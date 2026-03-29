@@ -1,58 +1,58 @@
-document.addEventListener('DOMContentLoaded', () => {
-   
-    const modeToggle = document.getElementById('mode-toggle');
-    const body = document.body;
+const jobForm = document.getElementById("jobForm");
+const jobList = document.getElementById("jobList");
+const filters = document.querySelectorAll(".filter button");
 
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        modeToggle.textContent = '🌙'; 
-    }
+let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
 
-    modeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        
-        
-        if (body.classList.contains('dark-mode')) {
-            localStorage.setItem('theme', 'dark');
-            modeToggle.textContent = '🌙';
-        } else {
-            localStorage.setItem('theme', 'light');
-            modeToggle.textContent = '☀️';
-        }
-    });
+function saveJobs() {
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+}
 
-    const revealElements = document.querySelectorAll('.reveal');
+function renderJobs(filter = "All") {
+  jobList.innerHTML = "";
 
-    
-    const observerOptions = {
-        root: null, 
-        rootMargin: '0px',
-        threshold: 0.15
-    };
+  const filteredJobs =
+    filter === "All" ? jobs : jobs.filter((job) => job.status === filter);
 
-    const observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-               
-                observer.unobserve(entry.target);
-            }
-        });
-    };
+  filteredJobs.forEach((job) => {
+  const realIndex = jobs.indexOf(job);
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  const li = document.createElement("li");
+  li.className = "job-item";
+  li.innerHTML = `
+    <div>
+      <span>${job.company}</span> - ${job.position} (${job.status})
+    </div>
+    <button class="delete-btn" onclick="deleteJob(${realIndex})">Delete</button>
+  `;
 
-    revealElements.forEach(element => {
-        observer.observe(element);
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
+  jobList.appendChild(li);
 });
+}
+
+function deleteJob(index) {
+  jobs.splice(index, 1);
+  saveJobs();
+  renderJobs();
+}
+
+jobForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const company = document.getElementById("company").value;
+  const position = document.getElementById("position").value;
+  const status = document.getElementById("status").value;
+
+  jobs.push({ company, position, status });
+  saveJobs();
+  renderJobs();
+
+  jobForm.reset();
+});
+
+filters.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    renderJobs(btn.dataset.status);
+  });
+});
+
+renderJobs();
